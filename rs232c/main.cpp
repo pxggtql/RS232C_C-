@@ -1,35 +1,54 @@
 #include <iostream>
+#include <Windows.h>
 using namespace std;
 #include "rs232c.h"
-void send()
+
+rs232c p;
+DWORD WINAPI  send(LPVOID lpParamter)
 {
-	rs232c p;
-	if (p.open("COM1"))
+	cout << "input your data:" << endl;
+	while (TRUE)
 	{
-		for (int i = 0; i < 10; i++)
-		{
-			p.send("helloworld", 10);
-		}
-		cout << "send demo finished...";
+			char str[100] = {};
+			cin >> str;
+			int data_len = 0;
+			data_len = strlen(str);
+			p.send(str, data_len);
 	}
+	return 0L;
 }
-void receive()
+
+DWORD WINAPI  receive(LPVOID lpParamter)
 {
-	rs232c w;
-	if (w.open("COM1"))
+
+	while (true)
 	{
-		char buf[1024];
-		while (true)
+		char rcv_buf[1024] = {};
+		p.receive(rcv_buf, 1024);
+
+		string str = rcv_buf;
+		int len =str.length();
+		if (len > 0)
 		{
-			memset(buf, 0, 1024);
-			w.receive(buf, 1024);
-			cout << buf;
+			cout << "receive message is:" << str << endl;
+		}
+		else
+		{
+			continue;
 		}
 	}
+	return 0L;
 }
 int main()
 {
-	send();
-	receive();
+	char str1[10];
+	HANDLE hThread[2];
+	cout << "请输入要监听的串口号\n";
+	scanf_s("%s", str1,10);
+	p.open(str1);
+	hThread[0] = CreateThread(NULL, 0, send, NULL, 0, NULL);
+	hThread[1] = CreateThread(NULL, 0, receive, NULL, 0, NULL);
+	WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
+	CloseHandle(hThread);
 	return 0;
 }
