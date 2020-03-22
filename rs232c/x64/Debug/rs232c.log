@@ -1,2 +1,4 @@
-﻿  rs232c.cpp
+﻿  main.cpp
+C:\Users\bugga\Desktop\大学学习\计算机网络\lab1\RS232C_Cpp\rs232c\main.cpp(15,26): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\bugga\Desktop\大学学习\计算机网络\lab1\RS232C_Cpp\rs232c\main.cpp(30,24): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   rs232c.vcxproj -> C:\Users\bugga\Desktop\大学学习\计算机网络\lab1\RS232C_Cpp\x64\Debug\rs232c.exe
