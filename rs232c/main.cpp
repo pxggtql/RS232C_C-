@@ -49,6 +49,7 @@ int main()
 	hThread[0] = CreateThread(NULL, 0, send, NULL, 0, NULL);
 	hThread[1] = CreateThread(NULL, 0, receive, NULL, 0, NULL);
 	WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
+	p.close();
 	CloseHandle(hThread);
 	return 0;
 }
